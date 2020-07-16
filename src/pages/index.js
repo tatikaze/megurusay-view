@@ -1,33 +1,26 @@
-import React, { useState } from "react"
-import { Link } from "gatsby"
+import React, { useState, useEffect } from "react"
 import axios from 'axios'
 import { Button } from '@material-ui/core'
 
 import Layout from "../components/layout"
-import Image from "../components/image"
 import SEO from "../components/seo"
 
-
-const IndexPage = () => {
-
+const IndexPage = ({data}) => {
   const [comment, setComment] = useState('');
+  useEffect(() => { fetch() }, []);
+	
   const fetch = () => {
-    axios.get('http://say.tatikaze.com/meguru').then(res => console.log(res)) 
+    axios.get('http://say.tatikaze.com/meguru').then(res => setComment(res.data.message))
   }
 
   return (
   <Layout>
     <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <Button onClick={fetch}>fetch</Button>
-    <h1>{comment}</h1>
+    <Button variant='contained' color='primary' onClick={fetch}>fetch</Button>
+    <h2>{comment}</h2>
     <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
+      <img src="https://pbs.twimg.com/profile_images/510517617941942272/0lcG3UaN_400x400.png" alt="meguru" />
     </div>
-    <Link to="/page-2/">Go to page 2</Link> <br />
-    <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
   </Layout>
   )
 }
